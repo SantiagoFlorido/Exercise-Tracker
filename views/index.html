@@ -1,0 +1,86 @@
+<!-- views/index.html -->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Rastreador de Ejercicio</title>
+    <link rel="icon" href="/SF-icon.png" type="image/png" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="/style.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Rastreador de Ejercicio</h1>
+
+      <form action="/api/users" method="post">
+        <h2>Crear un nuevo usuario</h2>
+        <p><code>POST /api/users</code></p>
+        <input
+          id="uname"
+          type="text"
+          name="username"
+          placeholder="Nombre de usuario"
+          required
+        />
+        <input type="submit" value="Enviar" />
+      </form>
+
+      <form action="/api/users/:_id/exercises" id="exercise-form" method="post">
+        <h2>Agregar ejercicios</h2>
+        <p><code>POST /api/users/:_id/exercises</code></p>
+        <input
+          id="uid"
+          type="text"
+          name=":_id"
+          placeholder="ID de usuario"
+          required
+        />
+        <input
+          id="desc"
+          type="text"
+          name="description"
+          placeholder="Descripción*"
+          required
+        />
+        <input
+          id="dur"
+          type="number"
+          name="duration"
+          placeholder="Duración* (minutos)"
+          required
+        />
+        <input
+          id="date"
+          type="date"
+          name="date"
+          placeholder="Fecha (yyyy-mm-dd)"
+        />
+        <input type="submit" value="Enviar" />
+      </form>
+
+      <p>
+        <strong>Ver registro de ejercicios:</strong>
+        <code>GET /api/users/:_id/logs?[from][&amp;to][&amp;limit]</code>
+      </p>
+      <p><strong>[ ]</strong> = opcional</p>
+      <p>
+        <strong>from, to</strong> = fechas (yyyy-mm-dd);
+        <strong>limit</strong> = número máximo de registros
+      </p>
+    </div>
+
+    <script>
+      const exerciseForm = document.getElementById("exercise-form");
+
+      exerciseForm.addEventListener("submit", () => {
+        const userId = document.getElementById("uid").value;
+        exerciseForm.action = `/api/users/${userId}/exercises`;
+      });
+    </script>
+  </body>
+</html>
