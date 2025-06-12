@@ -4,6 +4,10 @@ const app = express();
 const cors = require('cors');
 require('dotenv').config();
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -22,6 +26,9 @@ function generateId() {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html');
 });
+
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 // Crear un nuevo usuario
 app.post('/api/users', (req, res) => {
